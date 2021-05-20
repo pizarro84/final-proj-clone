@@ -2,7 +2,7 @@ import os
 import csv
 import pandas as pd
 from sqlalchemy import create_engine, Table, Column, MetaData
-from sqlalchemy import DateTime, Float, Integer, String
+from sqlalchemy import DateTime, Date, Float, Integer, String
 from sqlalchemy.sql.sqltypes import Boolean, VARCHAR, DATETIME
 
 meta = MetaData()
@@ -17,12 +17,20 @@ engine = create_engine(connection)
 if not engine.has_table(table_name):
     print("Creating Table")
 
-    new_table = Table(
-        table_name, meta,
-        Column('date', DATETIME),
-        Column('close', Float),
-        Column('real', Boolean)   
-    )
+    if connection == "sqlite:///db.sqlite":
+        new_table = Table(
+            table_name, meta,
+            Column('date', DateTime),
+            Column('close', Float),
+            Column('real', Boolean)   
+        )
+    else:
+            new_table = Table(
+            table_name, meta,
+            Column('date', Date),
+            Column('close', Float),
+            Column('real', Boolean)   
+        )
 
     meta.create_all(engine)
     
