@@ -92,10 +92,29 @@ def predict_date():
 
     # to return just the predict price for the date
     result["predict"] = float(model1.predict_date(date))
-    #result["trend"] = (model1.predict_date_df(date)).to_json(orient="split")
+    result["trend"] = (model1.predict_date_df(date)).to_dict(orient="records")
 
     return jsonify(result)
 
+@app.route("/api/bitcoin/all")
+def bitcoin():        
+    results = db.session.query(
+        bitcoin_data.date,
+        bitcoin_data.close        
+    ).all()
+    return jsonify(results)
+
+@app.route("/api/other/all")
+def other():        
+    results = db.session.query(
+        mix_data.date,
+        mix_data.gold,
+        mix_data.comp,
+        mix_data.spx,
+        mix_data.indu,
+        mix_data.oil,     
+    ).all()
+    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True)
