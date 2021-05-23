@@ -33,6 +33,7 @@ function disableFields() {
 
 // function for button press
 function tellMe(event) {
+    init();
     busyi.show();
     d3.event.preventDefault();
     d3.select("#alertOutcome").style("display", "none");
