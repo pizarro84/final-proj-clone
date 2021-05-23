@@ -2,11 +2,10 @@ import pandas as pd
 from flask import (Flask, render_template, jsonify, request, redirect)
 import simplejson
 from flask_sqlalchemy import SQLAlchemy
-from flask import send_from_directory
 from joblib import load
 from datetime import datetime
 import os
-# import model.model1 as model1
+import model.model1 as model1
 import model.model2 as model2
 from model.models import create_bitcoin_data_classes, create_mix_data_classes
 import etl_func
@@ -27,7 +26,6 @@ db = SQLAlchemy(app)
 bitcoin_data = create_bitcoin_data_classes(db)
 mix_data = create_mix_data_classes(db)
 
-
 @app.route('/')
 def index():
     """
@@ -35,11 +33,6 @@ def index():
     which we will then pass to the prediction endpoint
     """
     return render_template("index.html")
-
-
-app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # route to do the initial data load to database
 
@@ -90,20 +83,18 @@ def predict_feature():
 #     "date": "24/05/2021"
 # }
 # change the orient="split" to get different json format for the dataframe
-# @app.route("/predict/date", methods=["POST"])
-# def predict_date():
-#     data = request.json
-#     p_type = data["type"]
-#     date = datetime.strptime(data["date"], "%Y-%m-%d").date()
-#     result = {}
-#     # to return just the predict price for the date
-#     if p_type == "price":
-#         result["price"] = float(model1.predict_date(date))
-#     # to return the whole prediction dataframe
-#     elif p_type == "trend":
-#         result["trend"] = (model1.predict_date_df(date)
-#                            ).to_json(orient="split")
-#     return jsonify(result)
+@app.route("/predict/date", methods=["POST"])
+def predict_date():
+    data = request.json
+    p_type = data["type"]
+    date = datetime.strptime(data["date"], "%Y-%m-%d").date()
+    result = {}
+
+    # to return just the predict price for the date
+    result["predict"] = float(model1.predict_date(date))
+    #result["trend"] = (model1.predict_date_df(date)).to_json(orient="split")
+
+    return jsonify(result)
 
 
 if __name__ == '__main__':
