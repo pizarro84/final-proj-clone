@@ -7,10 +7,10 @@ d3.select("#alertOutcome").style("display", "none");
 
 // init busy indicator
 busyi = new busy_indicator(document.getElementById("busybox"),
-document.querySelector("#busybox div"));
+    document.querySelector("#busybox div"));
 
 // show / hide other fields
-function disableFields(){
+function disableFields() {
     let predictType = d3.select("#predictType").node().value;
 
     if (predictType === "byvalues") {
@@ -21,7 +21,7 @@ function disableFields(){
         document.getElementById("spxval").disabled = false;
 
     } else {
-        
+
         document.getElementById("goldval").disabled = true;
         document.getElementById("compval").disabled = true;
         document.getElementById("induval").disabled = true;
@@ -29,7 +29,7 @@ function disableFields(){
         document.getElementById("spxval").disabled = true;
     }
 
-  }
+}
 
 // function for button press
 function tellMe(event) {
@@ -109,7 +109,7 @@ function showResult(data) {
         drawLine(data);
         alertOutcomeDisplay.text(`${messageprefix} ${bitcoinValue}!!!`);
         alertOutcomeDisplay.style("display", "block");
-    }else{
+    } else {
         alertOutcomeDisplay.text(`${messageprefix} ${predict}!!!`);
         alertOutcomeDisplay.style("display", "block");
     }
@@ -334,6 +334,10 @@ function buildAllOilChart(dropdown_values) {
         Plotly.newPlot('oilprice-plot', traces, layout, config);
     });
 }
-buildAllBTCChart();
-buildAllGOLDChart();
-buildAllOilChart();
+
+function init() {
+    buildAllBTCChart();
+    buildAllGOLDChart();
+    buildAllOilChart();
+}
+
