@@ -55,7 +55,9 @@ def load_data():
 def predict_feature():
     data = request.json
     columns = list(data.keys())
+    
     #model2.create_model(columns)
+
     # create dataframe from received data
     # rename columns and sort as per the
     # order columns were trained on
