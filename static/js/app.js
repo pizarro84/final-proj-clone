@@ -34,7 +34,7 @@ function disableFields() {
 // function for button press
 function tellMe(event) {
     init();
-    busyi.show();
+    //busyi.show();
     //d3.event.preventDefault();
     d3.select("#alertOutcome").style("display", "none");
     console.log("Checking Bitcoin Price");
@@ -116,7 +116,7 @@ function showResult(data) {
     }
 
     // var outcome = "Unknown";
-    busyi.hide();
+    //busyi.hide();
 
 
 
