@@ -342,3 +342,8 @@ function init() {
     buildAllOilChart();
 }
 
+
+buildAllBTCChart();
+buildAllGOLDChart();
+buildAllOilChart();
+
